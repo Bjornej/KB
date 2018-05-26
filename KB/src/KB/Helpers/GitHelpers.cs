@@ -1,9 +1,6 @@
 ﻿using LibGit2Sharp;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace KB.Helpers
 {
@@ -15,6 +12,10 @@ namespace KB.Helpers
             Repository.Init(folder);
         }
 
+        public static bool IsInitialized(string folder)
+        {
+            return Repository.IsValid(folder);
+        }
 
         public static void Clone(string folder, string remoteRepo)
         {
@@ -24,7 +25,6 @@ namespace KB.Helpers
                 IsBare = false,
             });
         }
-
 
         public static void Commit(string folder, string path, string content, string username)
         {
@@ -46,7 +46,6 @@ namespace KB.Helpers
             }
         }
 
-
         public static void Push(string folder)
         {
             using (var repo = new Repository(folder))
@@ -54,6 +53,5 @@ namespace KB.Helpers
                 repo.Network.Push(repo.Branches["master"]);
             }
         }
-
     }
 }
