@@ -45,5 +45,11 @@ namespace KB.Controllers
         {
             GitHelpers.Commit(Constants.RepositoryFolder, data.Path, data.Content, "test");
         }
+
+        [HttpGet]
+        public object GetStructure()
+        {
+            return RepositoryStructure.Root;
+        }
     }
 }

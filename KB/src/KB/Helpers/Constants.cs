@@ -15,7 +15,7 @@ namespace KB.Helpers
                 return Path.Combine(Environment.CurrentDirectory, "Repository");
             }
 
-            private set { };
+            private set { }
         }
     }
 }
