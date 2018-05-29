@@ -12,7 +12,7 @@ namespace KB.Helpers
         {
             get
             {
-                return Path.Combine(Environment.CurrentDirectory, "Repository");
+                return Path.Combine(Environment.CurrentDirectory, "wwwroot", "Repository");
             }
 
             private set { }
