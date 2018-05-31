@@ -1,0 +1,34 @@
+﻿body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.application {
+    height:100vh;
+    min-height:100vh;
+    max-height:100vh;
+}
+
+.application__header {
+    height: 30px;
+    min-height: 30px;
+    max-height: 30px;
+    padding: 5px;
+    font-size: 20px;
+    line-height: 18px;
+    color:white;
+    background: #1488CC; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2B32B2, #1488CC); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2B32B2, #1488CC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.application__body {
+    height: calc(100vh - 30px);
+    min-height: calc(100vh - 30px);
+    max-height: calc(100vh - 30px);
+}
