@@ -32,3 +32,55 @@
     min-height: calc(100vh - 30px);
     max-height: calc(100vh - 30px);
 }
+
+.choiches  {
+    width: 50vw;
+    margin: 10vh auto;
+    text-align: center;
+}
+    .choiches h3 {
+        font-weight: 100 !important;
+    }
+
+    .choiches__choiche {
+        width: 50%;
+        float: left;
+    }
+
+.choiches__choiche input {
+    height: 30px;
+    font-size:16px;
+    padding:5px;
+}
+
+.choiches__submit {
+    cursor: pointer;
+    display: inline-block;
+    min-height: 1em;
+    outline: 0;
+    border: none;
+    vertical-align: baseline;
+    background: #e0e1e2 none;
+    color: rgba(0,0,0,.6);
+    padding: .78571429em 1.5em .78571429em;
+    text-transform: none;
+    text-shadow: none;
+    font-weight: 700;
+    line-height: 1em;
+    font-style: normal;
+    text-align: center;
+    text-decoration: none;
+    border-radius: .28571429rem;
+    -webkit-box-shadow: 0 0 0 1px transparent inset, 0 0 0 0 rgba(34,36,38,.15) inset;
+    box-shadow: 0 0 0 1px transparent inset, 0 0 0 0 rgba(34,36,38,.15) inset;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+   will-change: '';
+    -webkit-tap-highlight-color: transparent;
+    background-color: #2185d0;
+    color: #fff;
+    text-shadow: none;
+    background-image: none;
+}

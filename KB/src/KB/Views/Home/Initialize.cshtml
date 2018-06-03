@@ -3,5 +3,29 @@
     ViewData["Title"] = "Initialize";
 }
 
-<h2>Initialize</h2>
+
+<div class="choiches">
+    <h3>This Knowledge base seems not to have been initialized.</h3>
+    <h3> You can clone an existing repository or init one</h3>
+
+    <div class="choiches__choiche">
+        @using (Html.BeginForm("Clone", "Home", FormMethod.Post))
+        {
+            <h4>Clone an existing repository</h4>
+            @Html.TextBox("url");
+            <br /><br />
+            <button type="submit" class="choiches__submit">Clone</button>
+        }
+    </div>
+    <div class="choiches__choiche">
+        <h4>Initialize and setup a remote clone</h4>
+        @using (Html.BeginForm("Init", "Home", FormMethod.Post))
+        {
+            @Html.TextBox("url");
+
+            <br /><br />
+            <button type="submit"  class="choiches__submit">Initialize</button>
+        }
+    </div>
+</div>
 
