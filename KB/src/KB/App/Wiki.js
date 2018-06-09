@@ -14,7 +14,9 @@ class Container extends Component {
         super(props);
         this.state = {
             edit: false,
-            text: null
+            text: null,
+            convertedText: null,
+            title: null
         };
         this.load(this.props.params.splat);
     }
@@ -26,7 +28,10 @@ class Container extends Component {
             method: 'get',
             contentType: 'application/text',
             success: (res) => {
-                this.setState({ text: res })
+                debugger;
+                var html = converter.makeHtml(res)
+                var meta = converter.getMetadata();
+                this.setState({ text: res, convertedText: html, title: meta.title });
             }
         })
     }
@@ -39,7 +44,8 @@ class Container extends Component {
 
     render() {
         return <div className="page">
-            <div className="page__content" dangerouslySetInnerHTML={{ __html: converter.makeHtml(this.state.text)}}/>
+            <h2 className="page__title">{this.state.title} </h2>
+            <div className="page__content" dangerouslySetInnerHTML={{ __html: this.state.convertedText }} />
         </div>;
     } 
 }
