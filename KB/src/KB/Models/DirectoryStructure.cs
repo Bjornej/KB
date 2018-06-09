@@ -1,6 +1,7 @@
 ﻿using KB.Helpers;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace KB.Models
 {
@@ -17,13 +18,10 @@ namespace KB.Models
 
     public class RootStructure
     {
-        public ICollection<string> Entries { get; set; }
-
         public ICollection<DirectoryStructure> Childrens { get; set; }
 
         public RootStructure()
         {
-            Entries = new List<string>();
             Childrens = new List<DirectoryStructure>();
         }
 
@@ -32,48 +30,44 @@ namespace KB.Models
         {
             foreach (var file in Directory.EnumerateFiles(folder, "*.md"))
             {
-                if (Directory.Exists(Path.Combine(folder, file.Replace(".md", ""))))
-                {
-                    Childrens.Add(DirectoryStructure.Parse(Path.Combine(folder, file.Replace(".md", ""))));
-                }
-                else
-                {
-                    Entries.Add(file.Replace(Constants.RepositoryFolder, ""));
-                }
+                Childrens.Add(DirectoryStructure.Parse(file));
             }
+
+            Childrens = Childrens.OrderBy(x => x.Order).ToList();
         }
     }
 
     public class DirectoryStructure
     {
-        public string Folder { get; set; }
+        public string Entry { get; set; }
 
-        public ICollection<string> Entries { get; set; }
+        public string Description { get; set; }
+
+        public int Order { get; set; }
 
         public ICollection<DirectoryStructure> Childrens { get; set; }
 
         public DirectoryStructure()
         {
-            Entries = new List<string>();
             Childrens = new List<DirectoryStructure>();
         }
 
-        public static DirectoryStructure Parse(string folder)
+        public static DirectoryStructure Parse(string file)
         {
             var d = new DirectoryStructure();
-            d.Folder = folder.Replace(Constants.RepositoryFolder, "");
+            d.Entry = file.Replace(Constants.RepositoryFolder, "").Substring(1);
+            d.Description = Path.GetFileNameWithoutExtension(file);
+            var folder = file.Replace(".md", "");
 
-            foreach (var file in Directory.EnumerateFiles(folder, "*.md"))
+            if (System.IO.Directory.Exists(folder))
             {
-                if (Directory.Exists(Path.Combine(folder, file.Replace(".md", ""))))
+                foreach (var file2 in Directory.EnumerateFiles(folder, "*.md"))
                 {
-                    d.Childrens.Add(DirectoryStructure.Parse(Path.Combine(folder, file.Replace(".md", ""))));
-                }
-                else
-                {
-                    d.Entries.Add(file.Replace(Constants.RepositoryFolder, ""));
+                    d.Childrens.Add(DirectoryStructure.Parse(file2));
                 }
             }
+
+            d.Childrens = d.Childrens.OrderBy(x => x.Order).ToList();
 
             return d;
         }

@@ -84,3 +84,41 @@
     text-shadow: none;
     background-image: none;
 }
+
+.sidebar__subItem {
+    display:none;
+    padding-left:15px;
+}
+
+.sidebar__subItem--open {
+    display:block;
+}
+
+.application__sidebar {
+    width: 30%;
+    float: left;
+    display: block;
+    max-width: 30%;
+    padding: 10px;
+    height: calc(100vh - 30px);
+    min-height: calc(100vh - 30px);
+    max-height: calc(100vh - 30px);
+    overflow: auto;
+}
+
+.application__mainBody {
+    width: calc(100vw - 30%);
+    float: left;
+    height: calc(100vh - 30px);
+    min-height: calc(100vh - 30px);
+    max-height: calc(100vh - 30px);
+    overflow:auto;
+}
+
+.sidebar__link--current {
+    font-weight:bold;
+}
+
+.page {
+
+}

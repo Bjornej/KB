@@ -12,6 +12,8 @@
     "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-2": "6.24.1",
-    "webpack-cli": "2.1.4"
+    "webpack-cli": "2.1.4",
+    "reqwest": "2.0.5",
+    "showdown": "1.8.6"
   }
 }

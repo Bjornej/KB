@@ -1,10 +1,16 @@
 ﻿import React, { Component } from "react";
+import Sidebar from "./Sidebar";
+import SideBar from "./Sidebar";
 
 class Container extends Component {
-    render(){
+    render() {
         return <div>
-            <h1>Hello</h1>
-            <div>{this.props.children}</div>
+            <div className="application__sidebar">
+                <SideBar />
+            </div>
+            <div className="application__mainBody">
+                {this.props.children}
+            </div>
         </div>;
     }
 }

@@ -7,7 +7,7 @@ import Wiki from "./Wiki";
 debugger;
 render((
     <Router history={hashHistory}>
-        <Route path="/" component={Container}>
+        <Route path="*" component={Container}>
             <IndexRoute component={Wiki} />
         </Route>
     </Router>
