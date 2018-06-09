@@ -37,6 +37,7 @@ namespace KB.Controllers
         [HttpGet]
         public string Read(string path)
         {
+            if (path == null) { path = "index.md"; }
             return System.IO.File.ReadAllText(Path.Combine(Constants.RepositoryFolder, path));
         }
 
