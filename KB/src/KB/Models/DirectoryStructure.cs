@@ -56,7 +56,11 @@ namespace KB.Models
         {
             var d = new DirectoryStructure();
             d.Entry = file.Replace(Constants.RepositoryFolder, "").Substring(1);
-            d.Description = Path.GetFileNameWithoutExtension(file);
+            var lines = File.ReadLines(file);
+            var title = (lines.SingleOrDefault(x => x.StartsWith("title:")) ?? "").Replace("title:","").Trim();
+            var order = (lines.SingleOrDefault(x => x.StartsWith("nav_sort:")) ?? "").Replace("nav_sort:", "").Trim();
+            d.Description = title;
+            d.Order = string.IsNullOrEmpty(order) ? 0 : int.Parse(order);
             var folder = file.Replace(".md", "");
 
             if (System.IO.Directory.Exists(folder))
