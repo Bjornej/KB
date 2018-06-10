@@ -1,3 +1,6 @@
+
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 module.exports = {
     entry: [
         './App/index.js'
@@ -11,6 +14,14 @@ module.exports = {
             }
         ]
     },
+    plugins: [
+        new CopyWebpackPlugin([
+            {
+                from: 'node_modules/monaco-editor/min/vs',
+                to: '../vs',
+            }
+        ])
+    ],
     resolve: {
         extensions: ['*', '.js', '.jsx']
     },
