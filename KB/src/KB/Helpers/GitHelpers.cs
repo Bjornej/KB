@@ -1,5 +1,6 @@
 ﻿using LibGit2Sharp;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace KB.Helpers
@@ -30,11 +31,20 @@ namespace KB.Helpers
         {
             using (var repo = new Repository(folder))
             {
-                File.WriteAllText(Path.Combine(folder, path), content);
-                repo.Index.Add(path);
-                repo.Commit($"Updated {Path.GetFileName(path)}", 
+                var paths = new List<string>();
+                paths.Add(folder);
+                paths.AddRange(path.Split(new string[] { "\\" }, StringSplitOptions.RemoveEmptyEntries));
+                var path2 = Path.Combine(paths.ToArray());
+                File.WriteAllText(path2, content);
+                repo.Index.Add(path.Substring(1));
+                repo.Commit($"Updated {Path.GetFileName(path2)}", 
                     new Signature(username, username, DateTimeOffset.UtcNow), 
                     new Signature(username, username, DateTimeOffset.UtcNow));
+
+                if (repo.Network.Remotes["origin"] != null)
+                {
+                    repo.Network.Push(repo.Branches["master"]);
+                }
             }
         }
 

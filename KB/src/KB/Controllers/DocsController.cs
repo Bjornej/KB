@@ -42,9 +42,9 @@ namespace KB.Controllers
         }
 
         [HttpPost]
-        public void Save(SaveDto data)
+        public void Save([FromBody]SaveDto data)
         {
-            GitHelpers.Commit(Constants.RepositoryFolder, data.Path, data.Content, "test");
+            GitHelpers.Commit(Constants.RepositoryFolder, data.Path.Replace("/","\\"), data.Content, "test");
         }
 
         [HttpGet]
