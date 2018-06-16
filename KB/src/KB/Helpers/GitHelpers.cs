@@ -18,16 +18,24 @@ namespace KB.Helpers
             return Repository.IsValid(folder);
         }
 
-        public static void Clone(string folder, string remoteRepo)
+        public static void Clone(string folder, string remoteRepo, string username, string password)
         {
-            Repository.Clone(remoteRepo, folder, new CloneOptions()
+            CloneOptions co = new CloneOptions()
             {
                 Checkout = true,
                 IsBare = false,
-            });
+            };
+
+            if (username != null && password != null)
+            {
+                Credentials ca = new UsernamePasswordCredentials() { Username = username, Password = password };
+                co.CredentialsProvider = (_url, _user, _cred) => ca;
+            }
+
+            Repository.Clone(remoteRepo, folder,co);
         }
 
-        public static void Commit(string folder, string path, string content, string username)
+        public static void Commit(string folder, string path, string content, string username, string name, string password)
         {
             using (var repo = new Repository(folder))
             {
@@ -43,7 +51,18 @@ namespace KB.Helpers
 
                 if (repo.Network.Remotes["origin"] != null)
                 {
-                    repo.Network.Push(repo.Branches["master"]);
+                    PushOptions co = new PushOptions()
+                    {
+                        
+                    };
+
+                    if (name != null && password != null)
+                    {
+                        Credentials ca = new UsernamePasswordCredentials() { Username = name, Password = password };
+                        co.CredentialsProvider = (_url, _user, _cred) => ca;
+                    }
+
+                    repo.Network.Push(repo.Network.Remotes["origin"], "refs/heads/master:refs/heads/master",co);
                 }
             }
         }

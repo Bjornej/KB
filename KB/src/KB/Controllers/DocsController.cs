@@ -1,38 +1,19 @@
 ﻿using KB.Helpers;
 using KB.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System.IO;
 
 namespace KB.Controllers
 {
     public class DocsController : Controller
     {
-        [HttpGet]
-        public bool IsInitialized()
+        public DocsController(IConfiguration conf)
         {
-            return GitHelpers.IsInitialized(Constants.RepositoryFolder);
+            Configuration = conf;
         }
 
-        [HttpPost]
-        public void Init()
-        {
-            GitHelpers.Init(Constants.RepositoryFolder);
-        }
-
-        [HttpPost]
-        public void SetOrigin(string remote)
-        {
-            GitHelpers.AddRemote(Constants.RepositoryFolder, remote);
-        }
-
-        [HttpPost]
-        public void Clone(string remote)
-        {
-            if (!GitHelpers.IsInitialized(Constants.RepositoryFolder))
-            {
-                GitHelpers.Clone(Constants.RepositoryFolder, remote);
-            }
-        }
+        private readonly IConfiguration Configuration;
 
         [HttpGet]
         public string Read(string path)
@@ -44,7 +25,7 @@ namespace KB.Controllers
         [HttpPost]
         public void Save([FromBody]SaveDto data)
         {
-            GitHelpers.Commit(Constants.RepositoryFolder, data.Path.Replace("/","\\"), data.Content, "test");
+            GitHelpers.Commit(Constants.RepositoryFolder, data.Path.Replace("/","\\"), data.Content, "test", Configuration.GetValue<string>("repositoryUser", null), Configuration.GetValue<string>("password", null));
         }
 
         [HttpGet]
