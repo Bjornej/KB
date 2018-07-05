@@ -43,6 +43,7 @@ namespace KB.Helpers
                 paths.Add(folder);
                 paths.AddRange(path.Split(new string[] { "\\" }, StringSplitOptions.RemoveEmptyEntries));
                 var path2 = Path.Combine(paths.ToArray());
+                Directory.CreateDirectory(Path.GetDirectoryName(path2));
                 File.WriteAllText(path2, content);
                 repo.Index.Add(path.Substring(1));
                 repo.Commit($"Updated {Path.GetFileName(path2)}", 

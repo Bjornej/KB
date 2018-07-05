@@ -111,7 +111,7 @@ class Container extends Component {
 
     render() {
         return <div className="page">
-            <h2 className="page__title">{this.state.title} <button onClick={this.edit}>{this.state.edit ? "Save" : "Modify"}</button> </h2>
+            <h2 className="page__title">{this.state.title} <button className="button__undo" onClick={this.edit}>{this.state.edit ? "Save" : "Modify"}</button> </h2>
             {this.state.edit ?
                 <MonacoEditor
                     language="markdown"

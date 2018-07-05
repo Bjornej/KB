@@ -258,3 +258,126 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 .hljs-strong {
     font-weight: bold;
 }
+
+.sidebar_menu {
+    display: inline-block;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: white;
+    width: 140px;
+    border: 1px solid #ccc;
+    z-index:10;
+}
+
+.sidebar__item {
+    position:relative;
+}
+
+.sidebar__link {
+    display:inline-block;
+    position:relative;
+}
+
+.sidebar__menu__item {
+    cursor:pointer;
+    padding:5px;
+    font-weight:normal;
+}
+
+.sidebar__menu__item:hover {
+    background-color:rgba(34,36,38,.15);
+}
+
+.dialog {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0;
+    background-color:rgba(33,37,41,0.2)
+}
+
+.dialog__body {
+    width: 500px;
+    padding: 20px;
+    background-color: white;
+    margin: 20vh auto;
+    border-radius: 2px;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+    height:110px;
+}
+
+    .dialog__body input {
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+
+    .dialog__body .button__undo {
+        float: left;
+    }
+
+.button__undo {
+    background: 0 0;
+    border: none;
+    border-radius: 2px;
+    color: #000;
+    position: relative;
+    height: 36px;
+    margin: 0;
+    min-width: 64px;
+    padding: 0 16px;
+    display: inline-block;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    overflow: hidden;
+    will-change: box-shadow;
+    transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    line-height: 36px;
+    vertical-align: middle;
+    background-color: rgba(158,158,158,.4);
+}
+
+.button__confirm {
+    float: right;
+    background: 0 0;
+    border: none;
+    border-radius: 2px;
+    color: #000;
+    position: relative;
+    height: 36px;
+    margin: 0;
+    min-width: 64px;
+    padding: 0 16px;
+    display: inline-block;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    overflow: hidden;
+    will-change: box-shadow;
+    transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    line-height: 36px;
+    vertical-align: middle;
+    background: #3f51b5;
+    color: #fff;
+}

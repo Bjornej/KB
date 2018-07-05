@@ -26,6 +26,14 @@ namespace KB.Controllers
         public void Save([FromBody]SaveDto data)
         {
             GitHelpers.Commit(Constants.RepositoryFolder, data.Path.Replace("/","\\"), data.Content, "test", Configuration.GetValue<string>("repositoryUser", null), Configuration.GetValue<string>("password", null));
+            RepositoryStructure.Initialize();
+        }
+
+        [HttpPost]
+        public void CreatePage([FromBody]SaveDto data)
+        {
+            GitHelpers.Commit(Constants.RepositoryFolder, data.Path.Replace("/", "\\"), KB.Resource.NewPage, "test", Configuration.GetValue<string>("repositoryUser", null), Configuration.GetValue<string>("password", null));
+            RepositoryStructure.Initialize();
         }
 
         [HttpGet]
