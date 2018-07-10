@@ -11,6 +11,83 @@ var converter = new showdown.Converter({
 });
 
 
+// Get the top position of an element in the document
+var getTop = function (element) {
+    // return value of html.getBoundingClientRect().top ... IE : 0, other browsers : -pageYOffset
+    if (element.nodeName === 'HTML') return -window.pageYOffset
+    return element.getBoundingClientRect().top + window.pageYOffset;
+}
+// ease in out function thanks to:
+// http://blog.greweb.fr/2012/02/bezier-curve-based-easing-functions-from-concept-to-implementation/
+var easeInOutCubic = function (t) { return t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1 }
+
+// calculate the scroll position we should be in
+// given the start and end point of the scroll
+// the time elapsed from the beginning of the scroll
+// and the total duration of the scroll (default 500ms)
+var position = function (start, end, elapsed, duration) {
+    if (elapsed > duration) return end;
+    return start + (end - start) * easeInOutCubic(elapsed / duration); // <-- you can change the easing funtion there
+    // return start + (end - start) * (elapsed / duration); // <-- this would give a linear scroll
+}
+
+// we use requestAnimationFrame to be called by the browser before every repaint
+// if the first argument is an element then scroll to the top of this element
+// if the first argument is numeric then scroll to this location
+// if the callback exist, it is called when the scrolling is finished
+// if context is set then scroll that element, else scroll window 
+var smoothscroll = function (el, duration, callback, context, offsetTop) {
+    duration = duration || 500;
+    context = context || window;
+    var start = window.pageYOffset;
+
+    if (typeof el === 'number') {
+        var end = parseInt(el);
+    } else {
+        var end = getTop(el);
+    }
+    end -= offsetTop || 0;
+
+    if (context != null) {
+        start += context.scrollTop;
+        end += context.scrollTop;
+    }
+
+    var clock = Date.now();
+    var requestAnimationFrame = window.requestAnimationFrame ||
+        window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame ||
+        function (fn) { window.setTimeout(fn, 15); };
+
+    var step = function () {
+        var elapsed = Date.now() - clock;
+        if (context !== window) {
+            context.scrollTop = position(start, end, elapsed, duration);
+        }
+        else {
+            window.scroll(0, position(start, end, elapsed, duration));
+        }
+
+        if (elapsed > duration) {
+            if (typeof callback === 'function') {
+                callback(el);
+            }
+        } else {
+            requestAnimationFrame(step);
+        }
+    }
+    step();
+}
+
+
+
+function extractSections(text) {
+    if (text == null) { return []; }
+    var span = document.createElement('span');
+    span.innerHTML = text;
+    var titles = span.querySelectorAll("h2");
+    return [].slice.call(titles).map(x => x.textContent);
+}
+
 
 function rel_to_abs(url, base_url) {
     /* Only accept commonly trusted protocols:
@@ -75,16 +152,16 @@ class Container extends Component {
         debugger;
         reqwest({
             url: 'Docs/Save'
-  , type: 'json'
-  , method: 'post'
-  , contentType: 'application/json',
+            , type: 'json'
+            , method: 'post'
+            , contentType: 'application/json',
             data: JSON.stringify({
-                Path: window.location.hash.replace("#",""),
+                Path: window.location.hash.replace("#", ""),
                 Content: text
             }),
             success: (res) => {
 
-                this.setState({ edit:false});
+                this.setState({ edit: false });
             }
         })
     }
@@ -109,7 +186,19 @@ class Container extends Component {
         }
     }
 
+    scrollTo = (target) => {
+        var titles = Array.from(document.querySelectorAll("h2"));
+        var titolo = titles.filter(x => x.textContent == target);
+
+        if (titolo.length > 0) {
+            debugger;
+            smoothscroll(titolo[0], 500, null, document.getElementsByClassName("application__mainBody")[0]);
+        }
+    }
+
     render() {
+        const titles = extractSections(this.state.convertedText);
+
         return <div className="page">
             <h2 className="page__title">{this.state.title} <button className="button__undo" onClick={this.edit}>{this.state.edit ? "Save" : "Modify"}</button> </h2>
             {this.state.edit ?
@@ -119,7 +208,12 @@ class Container extends Component {
                     onChange={(e) => this.setState({ text: e })}
                 />
                 :
-                <div className="page__content" dangerouslySetInnerHTML={{ __html: this.state.convertedText }} onClick={this.handleClick} />
+                <div>
+                    {titles.length > 1 && <div className="page__index">
+                        {titles.map(x => <div onClick={() => this.scrollTo(x)}>{x}</div>)}
+                    </div>}
+                    <div className="page__content" dangerouslySetInnerHTML={{ __html: this.state.convertedText }} onClick={this.handleClick} />
+                </div>
             }
         </div>;
     }

@@ -21,10 +21,10 @@
     padding: 5px;
     font-size: 20px;
     line-height: 18px;
-    color:white;
-    background: #1488CC; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #2B32B2, #1488CC); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #2B32B2, #1488CC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: white;
+    background-color: #3f51b5;
+    color: #fff;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
 }
 
 .application__body {
@@ -94,11 +94,14 @@
     display:block;
 }
 
+.application__body > div > div {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 280px 1fr;
+}
+
 .application__sidebar {
-    width: 30%;
-    float: left;
     display: block;
-    max-width: 30%;
     padding: 10px;
     height: calc(100vh - 30px);
     min-height: calc(100vh - 30px);
@@ -107,8 +110,6 @@
 }
 
 .application__mainBody {
-    width: calc(100vw - 30%);
-    float: left;
     height: calc(100vh - 30px);
     min-height: calc(100vh - 30px);
     max-height: calc(100vh - 30px);
@@ -124,9 +125,9 @@
 }
 
 .page {
-    height: calc(100vh - 30px);
-    min-height: calc(100vh - 30px);
-    max-height: calc(100vh - 30px);
+    height: calc(100vh - 50px);
+    min-height: calc(100vh - 50px);
+    max-height: calc(100vh - 50px);
 }
 
 img {
@@ -381,3 +382,35 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
     background: #3f51b5;
     color: #fff;
 }
+
+.page__index {
+    float: right;
+    position: fixed;
+    top: 30px;
+    right: 20px;
+    display: block;
+    width: 200px;
+    background-color: white;
+    border-radius: 2px;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    padding: 5px;
+    cursor: pointer;
+    z-index: 50;
+    max-height: 3px;
+    overflow: hidden;
+    border-bottom: 6px solid blue;
+    transition:0.25s all ease-in-out;
+}
+
+.page__index:hover {
+    max-height:2000px;
+}
+    .page__index > div {
+        margin-bottom:5px;
+    }
+
+    .page__index > div:hover {
+        background-color:rgba(229, 229, 229, 0.81);
+        user-select:none;
+    }
