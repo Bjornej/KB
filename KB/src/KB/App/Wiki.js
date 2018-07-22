@@ -199,12 +199,13 @@ class Container extends Component {
     render() {
         const titles = extractSections(this.state.convertedText);
 
-        return <div className="page">
+        return <div className={this.state.edit ? "page page--edit" : "page"}>
             <h2 className="page__title">{this.state.title} <button className="button__undo" onClick={this.edit}>{this.state.edit ? "Save" : "Modify"}</button> </h2>
             {this.state.edit ?
                 <MonacoEditor
                     language="markdown"
                     value={this.state.text}
+                    options={{ wordWrap: "on", minimap: { enabled: false } }}
                     onChange={(e) => this.setState({ text: e })}
                 />
                 :
